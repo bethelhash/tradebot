@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exness Trade Companion</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body{font-family:Roboto;text-align:center;background:#0e1117;color:#fff}
+    .card{background:#161b22;border-radius:10px;margin:20px;padding:20px}
+    .vip{background:#0074d9;color:#fff;padding:15px;border:none;border-radius:6px;font-size:1.2em}
+  </style>
+</head>
+<body>
+  <h1>📈 Exness Live</h1>
+
+  <div class="card">
+    <h2>Latest Trade</h2>
+    <p><b>Symbol:</b> XAUUSD</p>
+    <p><b>Action:</b> BUY</p>
+    <p><b>Price:</b> 2 350.12</p>
+    <p><b>P/L:</b> +$18.70</p>
+  </div>
+
+  <button class="vip" onclick="vip()">🔓 VIP Signals $9.90</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    function vip() {
+      tg.openInvoice("t.me/tapgame_Officialbot?start=invoice_ABC123");
+    }
+  </script>
+</body>
+</html>
