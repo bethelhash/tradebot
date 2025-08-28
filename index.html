@@ -23,29 +23,29 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // 1) Replace YOUR_BOT_TOKEN below
-    const BOT_TOKEN = "7886654459:AAEdKv9X2SYRF0y1GvdB5eyBsxLe4hQFciY";
-    // 2) Replace YOUR_CHAT_ID (your own user id)
-    const CHAT_ID   = "2098208454";
-
-    // Pull dummy data every 30 s (we’ll hook MT5 later)
-    setInterval(() => {
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=demo`)
-        .then(() => {
-          document.getElementById("trade").innerHTML = `
-            <h2>Latest Trade</h2>
-            <p><b>Symbol:</b> XAUUSD</p>
-            <p><b>Action:</b> BUY</p>
-            <p><b>Price:</b> 2 350.12</p>
-            <p><b>P/L:</b> +$18.70</p>
-            <small>Updated just now</small>
-          `;
-        });
-    }, 30000);
-
     function vip() {
       tg.openInvoice("t.me/tapgame_Officialbot?start=invoice_ABC123");
     }
+
+    async function loadTrade() {
+      try {
+        const res = await fetch("https://bethelhash.github.io/tradebot/live.json");
+        const d = await res.json();
+        document.getElementById("trade").innerHTML = `
+          <h2>Latest Trade</h2>
+          <p><b>Symbol:</b> ${d.symbol}</p>
+          <p><b>Action:</b> ${d.action}</p>
+          <p><b>Price:</b> ${d.price}</p>
+          <p><b>P/L:</b> $${d.profit.toFixed(2)}</p>
+          <small>Updated ${new Date().toLocaleTimeString()}</small>
+        `;
+      } catch (e) {
+        document.getElementById("trade").innerHTML = `<p>Error loading data</p>`;
+      }
+    }
+
+    loadTrade();
+    setInterval(loadTrade, 30000); // refresh every 30 s
   </script>
 </body>
 </html>
