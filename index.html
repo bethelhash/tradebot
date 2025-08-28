@@ -12,19 +12,36 @@
 <body>
   <h1>📈 Exness Live</h1>
 
-  <div class="card">
-    <h2>Latest Trade</h2>
-    <p><b>Symbol:</b> XAUUSD</p>
-    <p><b>Action:</b> BUY</p>
-    <p><b>Price:</b> 2 350.12</p>
-    <p><b>P/L:</b> +$18.70</p>
+  <div id="trade" class="card">
+    <p>Loading…</p>
   </div>
 
   <button class="vip" onclick="vip()">🔓 VIP Signals $9.90</button>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
+
+    // 1) Replace YOUR_BOT_TOKEN below
+    const BOT_TOKEN = "7886654459:AAEdKv9X2SYRF0y1GvdB5eyBsxLe4hQFciY";
+    // 2) Replace YOUR_CHAT_ID (your own user id)
+    const CHAT_ID   = "2098208454";
+
+    // Pull dummy data every 30 s (we’ll hook MT5 later)
+    setInterval(() => {
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=demo`)
+        .then(() => {
+          document.getElementById("trade").innerHTML = `
+            <h2>Latest Trade</h2>
+            <p><b>Symbol:</b> XAUUSD</p>
+            <p><b>Action:</b> BUY</p>
+            <p><b>Price:</b> 2 350.12</p>
+            <p><b>P/L:</b> +$18.70</p>
+            <small>Updated just now</small>
+          `;
+        });
+    }, 30000);
 
     function vip() {
       tg.openInvoice("t.me/tapgame_Officialbot?start=invoice_ABC123");
